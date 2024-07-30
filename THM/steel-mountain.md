@@ -16,7 +16,8 @@
 		- ![Screenshot 2024-07-28 230534.png](../assets/Screenshot_2024-07-28_230534_1722315071953_0.png)
 	- `manual` without Metasploit
 		- Use the `Python2` script from `ExploitDB` - https://www.exploit-db.com/exploits/
-			  ```
+
+    			-	```
 			  #!/usr/bin/python2
 			  # Exploit Title: HttpFileServer 2.3.x Remote Command Execution
 			  # Google Dork: intext:"httpfileserver 2.3"
