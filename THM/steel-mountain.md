@@ -1,6 +1,5 @@
 - ### Scanning & Enumeration
 	- **nmap** results
-	  collapsed:: true
 		- Fast Scan
 			- ![Screenshot 2024-07-28 230303.png](../assets/Screenshot_2024-07-28_230303_1722314700844_0.png)
 		- In-Depth Scan
@@ -11,13 +10,11 @@
 			- Version - `2.3.x` - vulnerable to `CVE-2014-6287`
 - ### Initial Access
 	- `auto` **Metasploit**
-	  collapsed:: true
 		- ![Screenshot 2024-07-28 230454.png](../assets/Screenshot_2024-07-28_230454_1722315028320_0.png)
 		- ![Screenshot 2024-07-28 230511.png](../assets/Screenshot_2024-07-28_230511_1722315042571_0.png)
 		- ![Screenshot 2024-07-28 230524.png](../assets/Screenshot_2024-07-28_230524_1722315058227_0.png)
 		- ![Screenshot 2024-07-28 230534.png](../assets/Screenshot_2024-07-28_230534_1722315071953_0.png)
 	- `manual`
-	  collapsed:: true
 		- Use the `Python2` script from `ExploitDB` - https://www.exploit-db.com/exploits/
 			-
 			  ```
@@ -84,7 +81,6 @@
 	-
 - ### Privilege Escalation
 	- `auto` Metasploit
-	  collapsed:: true
 		- Upload `PowerUp.ps1` script to search for *privesc* vectors
 			- ![Screenshot 2024-07-28 231504.png](../assets/Screenshot_2024-07-28_231504_1722315224891_0.png)
 		- Run `Invoke-AllChecks` to run the script
