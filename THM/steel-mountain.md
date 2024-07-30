@@ -17,7 +17,7 @@
 	- `manual` without Metasploit
 		- Use the `Python2` script from `ExploitDB` - https://www.exploit-db.com/exploits/
 
-    			-	```
+    			```
 			  #!/usr/bin/python2
 			  # Exploit Title: HttpFileServer 2.3.x Remote Command Execution
 			  # Google Dork: intext:"httpfileserver 2.3"
