@@ -9,14 +9,13 @@
 		- A *Regetto HTTP file server* is served on port `8080`
 			- Version - `2.3.x` - vulnerable to `CVE-2014-6287`
 - ### Initial Access
-	- `auto` **Metasploit**
+	- `auto` with Metasploit
 		- ![Screenshot 2024-07-28 230454.png](../assets/Screenshot_2024-07-28_230454_1722315028320_0.png)
 		- ![Screenshot 2024-07-28 230511.png](../assets/Screenshot_2024-07-28_230511_1722315042571_0.png)
 		- ![Screenshot 2024-07-28 230524.png](../assets/Screenshot_2024-07-28_230524_1722315058227_0.png)
 		- ![Screenshot 2024-07-28 230534.png](../assets/Screenshot_2024-07-28_230534_1722315071953_0.png)
-	- `manual`
+	- `manual` without Metasploit
 		- Use the `Python2` script from `ExploitDB` - https://www.exploit-db.com/exploits/
-			-
 			  ```
 			  #!/usr/bin/python2
 			  # Exploit Title: HttpFileServer 2.3.x Remote Command Execution
@@ -78,7 +77,6 @@
 			- ![Screenshot 2024-07-30 092909.png](../assets/Screenshot_2024-07-30_092909_1722315995005_0.png)
 		- The script is run twice for both of the above actions to take place
 			- ![Screenshot 2024-07-30 092917.png](../assets/Screenshot_2024-07-30_092917_1722316037939_0.png)
-	-
 - ### Privilege Escalation
 	- `auto` Metasploit
 		- Upload `PowerUp.ps1` script to search for *privesc* vectors
