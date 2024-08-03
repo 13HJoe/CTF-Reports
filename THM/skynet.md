@@ -1,0 +1,82 @@
+## Skynet CTF Report
+- ### Scanning & Enumeration
+	- **nmap**
+		- Basic scan
+			- ![Screenshot 2024-08-03 003835.png](../assets/Screenshot_2024-08-03_003835_1722658516138_0.png)
+		- Advanced scan
+			- ![Screenshot 2024-08-03 003853.png](../assets/Screenshot_2024-08-03_003853_1722658532844_0.png)
+	- **gobuster** - root scan
+		- ![Screenshot 2024-08-03 005540.png](../assets/Screenshot_2024-08-03_005540_1722658875144_0.png)
+		- `squirrelmail` directory login is found
+	- **SMB Enumeration**
+		- ![Screenshot 2024-08-03 003951.png](../assets/Screenshot_2024-08-03_003951_1722658552887_0.png)
+		- Note user - `milesdyson`
+		- Try login using default `anonymous` credentials
+			- ![Screenshot 2024-08-03 004208.png](../assets/Screenshot_2024-08-03_004208_1722658708595_0.png)
+			- Obtain `attention.txt` and `log1.txt` (Other log files are ignored as size=0)
+			- ![Screenshot 2024-08-03 004218.png](../assets/Screenshot_2024-08-03_004218_1722658802405_0.png)
+			- Viewing the files we notice that the log file is a list of passwords
+			- ![Screenshot 2024-08-03 004253.png](../assets/Screenshot_2024-08-03_004253_1722658840348_0.png)
+- ### Initial Access
+	- Brute force `squirrelmail` login
+		- ![Screenshot 2024-08-03 004645.png](../assets/Screenshot_2024-08-03_004645_1722659057433_0.png)
+		- **burpsuite**
+			- Intercepted HTTP request
+			- ![Screenshot 2024-08-03 004703.png](../assets/Screenshot_2024-08-03_004703_1722659081163_0.png)
+			- Send to intruder; mark password field as `payload position`
+			- ![Screenshot 2024-08-03 004725.png](../assets/Screenshot_2024-08-03_004725_1722659148118_0.png)
+			- Load `log1.txt` as `sniper` payload
+			- ![Screenshot 2024-08-03 004749.png](../assets/Screenshot_2024-08-03_004749_1722659171150_0.png){:height 518, :width 596}
+			- *Attack Results*
+			- ![Screenshot 2024-08-03 005504.png](../assets/Screenshot_2024-08-03_005504_1722659211331_0.png)
+				- Since the first request's response size is different from all the other requests; we can assume it to be the password
+			-
+	- Access `smb` server using new found login for user `milesdyson`
+		- ![Screenshot 2024-08-03 010453.png](../assets/Screenshot_2024-08-03_010453_1722659327648_0.png)
+		- ![Screenshot 2024-08-03 010516.png](../assets/Screenshot_2024-08-03_010516_1722659343967_0.png)
+		- ![Screenshot 2024-08-03 010711.png](../assets/Screenshot_2024-08-03_010711_1722659352633_0.png)
+		- `important.txt`
+			- ![Screenshot 2024-08-03 010724.png](../assets/Screenshot_2024-08-03_010724_1722659439299_0.png)
+			- Hidden directory found
+		-
+		-
+	- Run `gobuster` scan on the newly found hidden directory
+		- ![Screenshot 2024-08-03 011856.png](../assets/Screenshot_2024-08-03_011856_1722659760589_0.png)
+		- `/administrator` - directory found
+		- Cuppa CMS
+			- ![Screenshot 2024-08-03 011128.png](../assets/Screenshot_2024-08-03_011128_1722659743299_0.png){:height 440, :width 688}
+			- Vulnerability
+				- ![Screenshot 2024-08-03 012029.png](../assets/Screenshot_2024-08-03_012029_1722659787112_0.png)
+				- ![Screenshot 2024-08-03 012157.png](../assets/Screenshot_2024-08-03_012157_1722659796562_0.png)
+			- Exploit
+				- ![Screenshot 2024-08-03 012432.png](../assets/Screenshot_2024-08-03_012432_1722659813621_0.png)
+		-
+	- Exploit CMS
+		- Exploiting `urlConfig` field - Make the server download and execute `php-reverse-shell.php`
+		- ![Screenshot 2024-08-03 013203.png](../assets/Screenshot_2024-08-03_013203_1722659852597_0.png)
+		- ![Screenshot 2024-08-03 013209.png](../assets/Screenshot_2024-08-03_013209_1722659859283_0.png)
+		- **user flag**
+			- ![Screenshot 2024-08-03 013300.png](../assets/Screenshot_2024-08-03_013300_1722659865665_0.png)
+		- **shell stabilization**
+			- ![Screenshot 2024-08-03 013642.png](../assets/Screenshot_2024-08-03_013642_1722659885693_0.png)
+- ### Privilege Escalation
+	- Use `wget` to load `linpeas.sh` onto the target system
+		- ![Screenshot 2024-08-03 013917.png](../assets/Screenshot_2024-08-03_013917_1722660064400_0.png){:height 180, :width 650}
+	- `LinPeas.sh` -> `privesc` vectors (output)
+		- ![Screenshot 2024-08-03 014545.png](../assets/Screenshot_2024-08-03_014545_1722660091669_0.png)
+		- ![Screenshot 2024-08-03 014556.png](../assets/Screenshot_2024-08-03_014556_1722660099283_0.png)
+		- ![Screenshot 2024-08-03 014556.png](../assets/Screenshot_2024-08-03_014556_1722660114664_0.png)
+		- ![Screenshot 2024-08-03 014622.png](../assets/Screenshot_2024-08-03_014622_1722660121949_0.png)
+		- ![Screenshot 2024-08-03 014730.png](../assets/Screenshot_2024-08-03_014730_1722660140840_0.png)
+		- ![Screenshot 2024-08-03 014755.png](../assets/Screenshot_2024-08-03_014755_1722660149119_0.png)
+		- ![Screenshot 2024-08-03 014811.png](../assets/Screenshot_2024-08-03_014811_1722660156404_0.png)
+	- Possible Vector - `backup.sh` is run as `root` every minute
+		- ![Screenshot 2024-08-03 015108.png](../assets/Screenshot_2024-08-03_015108_1722660256427_0.png)
+		- ![Screenshot 2024-08-03 015058.png](../assets/Screenshot_2024-08-03_015058_1722660246882_0.png)
+	- Viewing `backup.sh` - we notice  tar command using a wildcard
+		- ![Screenshot 2024-08-03 015224.png](../assets/Screenshot_2024-08-03_015224_1722660384355_0.png)
+		- directory listing
+			- ![Screenshot 2024-08-03 015250.png](../assets/Screenshot_2024-08-03_015250_1722660400833_0.png)
+		- Using this article as a reference - https://www.hackingarticles.in/exploiting-wildcard-for-privilege-escalation
+		-
+	-
