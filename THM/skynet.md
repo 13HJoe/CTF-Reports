@@ -1,4 +1,3 @@
-## Skynet CTF Report
 - ### Scanning & Enumeration
 	- **nmap**
 		- Basic scan
@@ -78,5 +77,19 @@
 		- directory listing
 			- ![Screenshot 2024-08-03 015250.png](../assets/Screenshot_2024-08-03_015250_1722660400833_0.png)
 		- Using this article as a reference - https://www.hackingarticles.in/exploiting-wildcard-for-privilege-escalation
+		- View `/bin/bash` binary owner
+			- ![Screenshot 2024-08-03 015958.png](../assets/Screenshot_2024-08-03_015958_1722660897243_0.png)
+	- Objective - convert `/bin/bash` to a `SETUID` so that user `milesdyson` can execute with root permissions
+		- This is done using the wildcard exploit for the `tar` command in `backup.sh`
+		- ![Screenshot 2024-08-03 020244.png](../assets/Screenshot_2024-08-03_020244_1722661016296_0.png)
+		- ![Screenshot 2024-08-03 020600.png](../assets/Screenshot_2024-08-03_020600_1722661029336_0.png)
+		- After the `backup.sh` script runs (runs every minute), we can check permissions on `/bin/bash`
+			- ![Screenshot 2024-08-03 020613.png](../assets/Screenshot_2024-08-03_020613_1722661098195_0.png)
+		- The binary is successfully made an `SETUID` binary which means that the user `milesdyson` can execute the binary directly with elevated `root` user permissions
+		- ![Screenshot 2024-08-03 020700.png](../assets/Screenshot_2024-08-03_020700_1722661187274_0.png)
+		- ![Screenshot 2024-08-03 020706.png](../assets/Screenshot_2024-08-03_020706_1722661202708_0.png)
+	- **root flag**
+		- ![Screenshot 2024-08-03 020734.png](../assets/Screenshot_2024-08-03_020734_1722661221551_0.png)
 		-
 	-
+-
