@@ -1,3 +1,4 @@
+## Skynet CTF Report
 - ### Scanning & Enumeration
 	- **nmap**
 		- Basic scan
@@ -81,6 +82,17 @@
 			- ![Screenshot 2024-08-03 015958.png](../assets/Screenshot_2024-08-03_015958_1722660897243_0.png)
 	- Objective - convert `/bin/bash` to a `SETUID` so that user `milesdyson` can execute with root permissions
 		- This is done using the wildcard exploit for the `tar` command in `backup.sh`
+			- **concept**
+				- When the command `tar cf archive.tar *` is run in (`backup.sh`)the directory -`\\var\\www\\html`
+					- the wildcard matches all the files in the directory and archives them
+				- create a `.sh` file that changes the sets `/bin/bash` as an SETUID binary
+					- `printf '#!/bin/bash\nchmod +s /bin/bash > shel.sh`
+					- if this script is run normally; it won't work since it is run as `user-milesdyson`
+				- the commands
+					- **–checkpoint[=NUMBER] **show progress messages every Numbers record (default 10)
+					- **–checkpoint-action=ACTION **execute ACTION on each checkpoint
+					- There is a `–checkpoint-action option`, that will specify the program which will be executed when the checkpoint is reached. Mainly, this permits us to run an arbitrary command. Hence Options `–checkpoint=1` and `-checkpoint-action=exec=sh shell.sh` are handed to the `tar` program as command-line options.
+					-
 		- ![Screenshot 2024-08-03 020244.png](../assets/Screenshot_2024-08-03_020244_1722661016296_0.png)
 		- ![Screenshot 2024-08-03 020600.png](../assets/Screenshot_2024-08-03_020600_1722661029336_0.png)
 		- After the `backup.sh` script runs (runs every minute), we can check permissions on `/bin/bash`
@@ -90,6 +102,3 @@
 		- ![Screenshot 2024-08-03 020706.png](../assets/Screenshot_2024-08-03_020706_1722661202708_0.png)
 	- **root flag**
 		- ![Screenshot 2024-08-03 020734.png](../assets/Screenshot_2024-08-03_020734_1722661221551_0.png)
-		-
-	-
--
