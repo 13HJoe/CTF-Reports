@@ -10,7 +10,7 @@
 		- `squirrelmail` directory login is found
 	- **SMB Enumeration**
 		- ![Screenshot 2024-08-03 003951.png](../assets/Screenshot_2024-08-03_003951_1722658552887_0.png)
-		- Note user - `milesdyson`
+		- **note** user - `milesdyson`
 		- Try login using default `anonymous` credentials
 			- ![Screenshot 2024-08-03 004208.png](../assets/Screenshot_2024-08-03_004208_1722658708595_0.png)
 			- Obtain `attention.txt` and `log1.txt` (Other log files are ignored as size=0)
